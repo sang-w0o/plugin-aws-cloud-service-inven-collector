@@ -7,7 +7,7 @@
 - **[AWS Secret Key]**
 - **[Role ARN] (선택)**
 
-<img src="./GUIDE-img/summary(h2)-1.png" width="50%" height="50%"/>
+<img src="./docs/ko/GUIDE-img/summary(h2)-1.png" width="50%" height="50%"/>
 
 <img src="./GUIDE-img/summary(h2)-2.png" width="50%" height="50%"/>
 
