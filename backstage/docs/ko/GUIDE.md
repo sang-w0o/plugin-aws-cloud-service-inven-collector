@@ -9,7 +9,7 @@
 
 <img src="./docs/ko/GUIDE-img/summary(h2)-1.png" width="50%" height="50%"/>
 
-<img src="./GUIDE-img/summary(h2)-2.png" width="50%" height="50%"/>
+<img src="./ko/GUIDE-img/summary(h2)-2.png" width="50%" height="50%"/>
 
 본 설정 가이드는 위에서 언급한 4가지 설정 정보들이 무엇을 의미하고, 어디서 획득하는지 자세히 알아보도록 하겠습니다.
 
