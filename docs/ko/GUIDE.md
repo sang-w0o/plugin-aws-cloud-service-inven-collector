@@ -1,14 +1,15 @@
 ## 개요
 
 클라우드포레에서 AWS [서비스 계정](https://spaceone.org/ko/docs/guides/getting-started/#%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B3%84%EC%A0%95-%EC%84%A4%EC%A0%95)을 등록하기 위해서 아래와 같은 설정 정보가 필요합니다.
+
 - **[Account ID]**
-- **[AWS Access Key ID]** 
+- **[AWS Access Key ID]**
 - **[AWS Secret Key]**
 - **[Role ARN] (선택)**
 
-<img src="./GUIDE-img/summary(h2)-1.png" width="50%" height="50%">
+<img src="./GUIDE-img/summary(h2)-1.png" width="50%" height="50%"/>
 
-<img src="./GUIDE-img/summary(h2)-2.png" width="50%" height="50%">
+<img src="./GUIDE-img/summary(h2)-2.png" width="50%" height="50%"/>
 
 본 설정 가이드는 위에서 언급한 4가지 설정 정보들이 무엇을 의미하고, 어디서 획득하는지 자세히 알아보도록 하겠습니다.
 
@@ -30,8 +31,8 @@ AWS Access Key ID와 AWS Secret Key에 대한 상세한 설명은 [AWS Documenta
 
 ### **Role ARN** (Amazone Resource Name)
 
-ARN은 AWS 리소스를 구분하기 위한 식별자입니다. 
-**[Role ARN]** 은 아래에서 생성하게 될 역할(Role)에 대한 식별자를 의미하며 **[aws_assume_role]** 방식을 활용한 서비스 계정 등록 시 필요한 **[Role ARN]** 설정 정보를 제공합니다. 
+ARN은 AWS 리소스를 구분하기 위한 식별자입니다.
+**[Role ARN]** 은 아래에서 생성하게 될 역할(Role)에 대한 식별자를 의미하며 **[aws_assume_role]** 방식을 활용한 서비스 계정 등록 시 필요한 **[Role ARN]** 설정 정보를 제공합니다.
 ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)을 참고하십시오.
 
 4가지 개념에 대해 간략히 알아보았습니다.  
@@ -40,13 +41,14 @@ ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.co
 <br>
 <br>
 
-## ****전체 Flow****
+## \***\*전체 Flow\*\***
+
 클라우드포레에서는 AWS 연동에 대해 **[aws_access_key]** 방식과 **[aws_assume_role]** 총 두 가지 방식을 지원합니다.
 
-**[aws_access_key]** 를 이용한 방식은 **[Account ID]**, **[AWS Access Key ID]** 그리고 **[AWS Secret Key]** 에 대한 설정 정보가 필요하며, 
+**[aws_access_key]** 를 이용한 방식은 **[Account ID]**, **[AWS Access Key ID]** 그리고 **[AWS Secret Key]** 에 대한 설정 정보가 필요하며,
 **[aws_assume_role]** 방식을 이용할 경우, 위 정보 이외에 추가적으로 역할(Role)을 생성하여 **[Role ARN]** 설정 정보를 획득해야 합니다.
 
- 위 정보를 획득하기 위해 아래와 같은 순서로 설정을 진행해야 합니다.
+위 정보를 획득하기 위해 아래와 같은 순서로 설정을 진행해야 합니다.
 
 1. [정책(Policy) 생성](#1-정책Policy-생성)
 2. [IAM 사용자 생성](#2-IAM-사용자-생성)
@@ -59,27 +61,27 @@ ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.co
 
 ## 1. 정책(Policy) 생성
 
-[정책](https://docs.aws.amazon.com/mediaconvert/latest/ug/auth_access_what-are-policies.html)은 자격증명이나 AWS리소스에 대한 접근 권한을 정의합니다. 
-생성된 정책은 IAM 사용자, 그룹, 역할에 적용될 수 있습니다. 
+[정책](https://docs.aws.amazon.com/mediaconvert/latest/ug/auth_access_what-are-policies.html)은 자격증명이나 AWS리소스에 대한 접근 권한을 정의합니다.
+생성된 정책은 IAM 사용자, 그룹, 역할에 적용될 수 있습니다.
 
 클라우드포레는 AWS의 리소스 정보를 수집하기 위해 적절한 권한을 설정하여 정책(Policy)으로 만들어 사용하는 것을 권장합니다.  
 컬렉터 플러그인은 읽기 권한 이외의 어떠한 권한도 필요하지 않습니다.
 
 각 플러그인에서 필요로 하는 권한에 대한 정보는 아래와 같습니다.
 
-|Plugin                            | URL                                                                                              |
-|----------------------------------|--------------------------------------------------------------------------------------------------|
-| AWS Cloud Services collector     | https://github.com/spaceone-dev/plugin-aws-cloud-service-inven-collector#authentication-overview |
-| AWS EC2 Compute collector        | https://github.com/spaceone-dev/plugin-aws-ec2-inven-collector#authentication-overview           |
+| Plugin                                  | URL                                                                                              |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| AWS Cloud Services collector            | https://github.com/spaceone-dev/plugin-aws-cloud-service-inven-collector#authentication-overview |
+| AWS EC2 Compute collector               | https://github.com/spaceone-dev/plugin-aws-ec2-inven-collector#authentication-overview           |
 | AWS Personal Health Dashboard collector | https://github.com/spaceone-dev/plugin-aws-phd-inven-collector#authen                            |
-| AWS Trusted Advisor collector    | https://github.com/spaceone-dev/plugin-aws-phd-inven-collector#authentication-overview           |
+| AWS Trusted Advisor collector           | https://github.com/spaceone-dev/plugin-aws-phd-inven-collector#authentication-overview           |
 
 <br>
 <br>
 
 인벤토리 컬렉터가 실행되는데 필요한 권한에 대한 정책 생성 방법은 아래와 같습니다.
 
-(1) [AWS 콘솔](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3FhashArgs%3D%2523%26isauthcode%3Dtrue%26nc2%3Dh_ct%26src%3Dheader-signin%26state%3DhashArgsFromTB_us-west-1_170054870035abe3&client_id=arn%3Aaws%3Asignin%3A%3A%3Aconsole%2Fcanvas&forceMobileApp=0&code_challenge=50EZtidRQYVM_RvQ0yHgj2KQjR311eLzH3684mE0Tlk&code_challenge_method=SHA-256) 로그인 > [IAM 대시보드](https://us-east-1.console.aws.amazon.com/iamv2/home#/home) 이동   
+(1) [AWS 콘솔](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fconsole.aws.amazon.com%2Fconsole%2Fhome%3FhashArgs%3D%2523%26isauthcode%3Dtrue%26nc2%3Dh_ct%26src%3Dheader-signin%26state%3DhashArgsFromTB_us-west-1_170054870035abe3&client_id=arn%3Aaws%3Asignin%3A%3A%3Aconsole%2Fcanvas&forceMobileApp=0&code_challenge=50EZtidRQYVM_RvQ0yHgj2KQjR311eLzH3684mE0Tlk&code_challenge_method=SHA-256) 로그인 > [IAM 대시보드](https://us-east-1.console.aws.amazon.com/iamv2/home#/home) 이동  
 (1-2) 대시보드의 [액세스 관리 > 정책] 메뉴에서 정책을 생성할 수 있습니다.
 
 <img src="./GUIDE-img/create-policy(h2)-1.png" width="80%" height="80%">
@@ -92,11 +94,10 @@ ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.co
 (2-2) 컬렉터 플러그인은 서비스 데이터를 수집하기 위한 특정 권한이 있어야 합니다.  
 위 테이블에서 원하는 플러그인에 맞는 권한 목록을 복사 후 [다음:태그] 버튼을 클릭합니다.
 
-
 > 💡 **권한 정의 오류 발생 시**  
-        _이 정책에 다음 오류가 포함되어 있습니다. JSON strings must not have leading spaces_  
-        _For more information about the IAM policy grammar, see [AWS IAM Policies](http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-grammar.html)_  
-       위와 같은 오류 발생 시 코드 블록의 첫 번째 줄 공백을 삭제하십시오.
+>         _이 정책에 다음 오류가 포함되어 있습니다. JSON strings must not have leading spaces_  
+>         _For more information about the IAM policy grammar, see [AWS IAM Policies](http://docs.aws.amazon.com/IAM/latest/UserGuide/policies-grammar.html)_  
+>        위와 같은 오류 발생 시 코드 블록의 첫 번째 줄 공백을 삭제하십시오.
 
 <img src="./GUIDE-img/create-policy(h2)-3.png" width="80%" height="80%">
 
@@ -113,7 +114,7 @@ ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.co
 
 ## 2. IAM 사용자 생성
 
- [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html) 사용자는 AWS 리소스에 대한 액세스를 안전하게 제어하기 위해 생성합니다. 
+[IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html) 사용자는 AWS 리소스에 대한 액세스를 안전하게 제어하기 위해 생성합니다.
 생성된 IAM 사용자를 다음 단계에서 그룹에 추가합니다.  
 이 과정을 통해 **[AWS Access Key ID]** 와 **[AWS Secret Key]** 값을 얻을 수 있습니다.
 
@@ -140,7 +141,7 @@ ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.co
 <img src="./GUIDE-img/create-iam-user(h2)-4.png" width="80%" height="80%">
 
 (6) 현재 단계에서 IAM 사용자에게 권한 설정을 하지 않습니다.  
-[[3. 그룹 생성](#3-그룹Group-생성)] 단계에서 그룹에 정책을 추가하여 사용자에게 권한을 부여하게 됩니다.   
+[[3. 그룹 생성](#3-그룹Group-생성)] 단계에서 그룹에 정책을 추가하여 사용자에게 권한을 부여하게 됩니다.  
 [사용자 만들기] 버튼을 클릭합니다.
 
 <img src="./GUIDE-img/create-iam-user(h2)-4.png" width="80%" height="80%">
@@ -156,7 +157,7 @@ ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.co
 
 ## 3. 그룹(Group) 생성
 
-[그룹](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html)은 IAM 사용자의 집합입니다. 
+[그룹](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html)은 IAM 사용자의 집합입니다.
 그룹을 통해 사용자들에 대한 권한을 지정하여 해당 사용자들에 대한 권한을 더욱 쉽게 관리할 수 있습니다.
 
 (1) [IAM 대시보드](https://us-east-1.console.aws.amazon.com/iamv2/home#/home)로 이동  
@@ -180,17 +181,15 @@ ARN에 대한 자세한 설명은 [AWS Documentation](https://docs.aws.amazon.co
 ## 4. 역할(Role) 생성(선택)
 
 [역할](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)은 계정에 생성할 수 있는, 특정 권한을 지닌 IAM 자격 증명을 의미하며 [**[Assume Role]**](https://docs.aws.amazon.com/ko_kr/STS/latest/APIReference/API_AssumeRole.html)은 자신의 계정 혹은 다른 계정에 클라우드 리소스 액세스 권한을 부여하기 위해 사용됩니다.
- 
 
-> 다음은 [Assume Role] 활용 예시입니다.   
-_각각의 AWS 계정에 IAM 사용자 [A], [B], [C] 가 있고 역할을 위임받을 IAM사용자 [D] 가 있다고 가정하겠습니다.  
-[A], [B], [C] 각각의 IAM 사용자별로 클라우드 리소스 수집을 위한 권한이 있는 역할을 [D] 계정으로 위임하여 생성합니다.
-총 3개의 [Role ARN]이 생성되게 됩니다.  
-최종적으로 정책을 위임받은 [D] IAM 사용자의  [AWS Access Key ID], [AWS Secret Key] 와 [A], [B], [C] IAM 사용자의 [Role ARN] 을 통해 사용 중인 클라우드 리소스를 수집할 수 있게 됩니다._
-  
+> 다음은 [Assume Role] 활용 예시입니다.  
+> _각각의 AWS 계정에 IAM 사용자 [A], [B], [C] 가 있고 역할을 위임받을 IAM사용자 [D] 가 있다고 가정하겠습니다.  
+> [A], [B], [C] 각각의 IAM 사용자별로 클라우드 리소스 수집을 위한 권한이 있는 역할을 [D] 계정으로 위임하여 생성합니다.
+> 총 3개의 [Role ARN]이 생성되게 됩니다.  
+> 최종적으로 정책을 위임받은 [D] IAM 사용자의 [AWS Access Key ID], [AWS Secret Key] 와 [A], [B], [C] IAM 사용자의 [Role ARN] 을 통해 사용 중인 클라우드 리소스를 수집할 수 있게 됩니다._
 
 AWS 서비스 계정 등록 시 **[aws_assume_role]** 방식에 필요한 **[Role ARN]** 설정 정보를 얻을 수 있습니다.  
-**[aws_access_key]** 방식을 진행 중이라면 이 과정을 생략하시고 [서비스 계정 등록](#5-서비스-계정-등록)으로 이동하십시오.  
+**[aws_access_key]** 방식을 진행 중이라면 이 과정을 생략하시고 [서비스 계정 등록](#5-서비스-계정-등록)으로 이동하십시오.
 
 (1) [IAM 대시보드](https://us-east-1.console.aws.amazon.com/iamv2/home#/home)로 이동  
 (1-1) 대시보드에서 [액세스 관리 > 역할] 메뉴에서 역할을 생성할 수 있습니다.
@@ -207,7 +206,7 @@ AWS 서비스 계정 등록 시 **[aws_assume_role]** 방식에 필요한 **[Rol
 
 [이 계정]을 선택할 경우 자신의 계정이 사용하고 있는 클라우드 리소스에 대한 권한을 부여하게 됩니다.
 
-[다른 AWS 계정]을 선택할 경우 역할을 부여한 계정이 자신의 클라우드 리소스에 대한 권한을 부여받게 됩니다. 
+[다른 AWS 계정]을 선택할 경우 역할을 부여한 계정이 자신의 클라우드 리소스에 대한 권한을 부여받게 됩니다.
 
 <img src="./GUIDE-img/create-role(h2)-3.png" width="80%" height="80%">
 
@@ -229,7 +228,7 @@ AWS 서비스 계정 등록 시 **[aws_assume_role]** 방식에 필요한 **[Rol
 ## 5. 서비스 계정 등록
 
 이제 서비스 계정 추가를 위한 준비가 끝났습니다.  
-지금까지 설정 가이드를 진행하면서 얻은 설정 정보를 활용해 서비스 계정을 등록할 수 있습니다.   
+지금까지 설정 가이드를 진행하면서 얻은 설정 정보를 활용해 서비스 계정을 등록할 수 있습니다.  
 서비스 계정 등록의 자세한 방법은 **[[클라우드포레 사용자 가이드]](https://spaceone.org/ko/docs/guides/asset-inventory/service-account/#%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B3%84%EC%A0%95-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0)** 를 참고하십시오.
 
 - **Account ID**
@@ -252,8 +251,7 @@ AWS 서비스 계정 등록 시 **[aws_assume_role]** 방식에 필요한 **[Rol
 
 <img src="./GUIDE-img/create-service-account(h2)-3.png" width="80%" height="80%">
 
-
-(2-2) **[aws_asuume_role]** 방식 예시입니다. 
+(2-2) **[aws_asuume_role]** 방식 예시입니다.
 추가적으로 [**[Role ARN]**](#4-역할Role-생성선택)설정 정보가 필요합니다.
 
 <img src="./GUIDE-img/create-service-account(h2)-4.png" width="80%" height="80%">
