@@ -2,5 +2,5 @@ site_name: plugin-aws-cloud-service-inven-collector
 site_description: "Backstage plugin for AWS Cloud Service Inventory Collector"
 nav:
   - About: README.md
-  - KR: ko/GUIDE.md
-  - EN: en/GUIDE.md
+  - KR: ko/index.md
+  - EN: en/index.md
